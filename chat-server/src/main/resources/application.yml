@@ -1,0 +1,65 @@
+
+server:
+  port: 10085
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.louis.xxx.entity  # 你的实体类包路径
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# Ollama 服务接口地址
+ollama:
+  api:
+    url: http://localhost:11434/api/chat
+    model: qwen2:7b
+
+spring:
+  profiles:
+    # 运行环境
+    active: local
+  application:
+    name: chat-server
+  security:
+    user:
+      name: admin
+      password: yanjq2024
+  datasource:
+    url: jdbc:mysql://${intelliChat.mysql.ip}:${intelliChat.mysql.port}/${intelliChat.mysql.db}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: ${intelliChat.mysql.username}
+    password: ${intelliChat.mysql.password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 3
+      maximum-pool-size: 10
+      max-lifetime: 30000   #不能小于30秒，否则默认回到1800秒
+      connection-test-query: SELECT 1
+
+  rabbitmq:
+      host: ${intelliChat.rabbitmq.host}
+      port: ${intelliChat.rabbitmq.port}
+      username: ${intelliChat.rabbitmq.username}
+      password: ${intelliChat.rabbitmq.password}
+      virtual-host: ${intelliChat.rabbitmq.virtual-host}
+      listener:
+        simple:
+          acknowledge-mode: manual
+          prefetch: 100
+  data:
+    redis:
+      database: 0
+      host: ${intelliChat.redis.host}
+      port: ${intelliChat.redis.port}
+      password: ${intelliChat.redis.password}
+      timeout: 1800000
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1
+          min-idle: 0
+          max-idle: 8
+        shutdown-timeout: 100ms
+
+
+

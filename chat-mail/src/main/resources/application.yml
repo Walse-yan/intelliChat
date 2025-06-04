@@ -1,0 +1,54 @@
+server:
+  port: 10083
+#邮件相关配置
+spring:
+  application:
+    name: chat-mail
+  mail:
+    host: smtp.163.com
+    protocol: smtp
+    default-encoding: UTF-8
+    #邮箱名
+    username: y1159167391@163.com
+    #申请的授权码
+    password: FGejZgaRZNegMAae
+#    port: 465
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+    properties.mail.stmp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+#    properties.mail.debug: true
+#  RabbitMQ的配置
+  rabbitmq:
+    host: 100.100.53.107
+    port: 5672
+    username: yanjq
+    password: yanjq2024
+    virtual-host: intelliChat
+    #开启手动确认是否消息消费成功
+    listener:
+      simple:
+        acknowledge-mode: manual
+        prefetch: 100
+#    publisher-confirm-type: correlated
+#    publisher-returns: true
+  #Redis的配置
+  data:
+    redis:
+      database: 0
+      host: 100.100.53.107
+      port: 6379
+      password: yanjq2024
+      timeout: 1800000
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1
+          min-idle: 0
+          max-idle: 8
+        shutdown-timeout: 100ms
+
